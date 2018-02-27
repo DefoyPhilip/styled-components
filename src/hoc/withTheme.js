@@ -37,9 +37,11 @@ const wrapWithTheme = (Component: ReactClass<any>) => {
     unsubscribeId: number = -1
 
     componentWillMount() {
-      const { defaultProps } = this.constructor
+      const { defaultProps } = Component
       const styledContext = this.context[CHANNEL_NEXT]
-      const themeProp = determineTheme(this.props, undefined, defaultProps)
+      const fallback =
+        defaultProps && defaultProps.theme ? defaultProps.theme : undefined
+      const themeProp = determineTheme(this.props, fallback, defaultProps)
       if (
         styledContext === undefined &&
         themeProp === undefined &&
